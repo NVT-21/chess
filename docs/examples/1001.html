@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>xiangqiboardjs.com &raquo; Example #1001 - Start Position</title>
+    <base href="../"/>
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="css/xiangqiboard.min.css"/>
+</head>
+<body>
+<p><a href="examples.html#1001">&larr; Back to all examples.</a></p>
+
+<p>Pass <code class="js string">'start'</code> as the second argument to initialize
+the board to the start position.</p>
+
+<!--- Begin Example HTML ------------------------------------------------------>
+<div id="myBoard" style="width: 450px"></div>
+<!--- End Example HTML -------------------------------------------------------->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" 
+integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="js/xiangqiboard.min.js"></script>
+<!--- Begin Example JS -------------------------------------------------------->
+<script>
+      const config = {
+        pieceTheme: './docs/img/xiangqipieces/traditional/{piece}.svg',
+        boardTheme: './docs/img/xiangqiboards/wikimedia/xiangqiboard.svg',
+        orientation: 'white',
+        position: game.fen(),
+        showNotation: true
+    }
+
+    let board=Xiangqiboard('#myBoard', config)
+
+</script>
+<!--- End Example JS ---------------------------------------------------------->
+</body>
+</html>
