@@ -5,37 +5,339 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>Chessboard Tests</title>
   <link rel="stylesheet" href="/assets/xiangqiboard.css" />
+  <link rel="stylesheet" href="/assets/index.css">
 </head>
 <body>
-<div style="width: 1290px;">
-    <div id="myBoard1" style="width: 25%;float: left;"></div>
-    <div id="myBoard2" style="width: 25%;float: left;"></div>
-    <!-- <div id="myBoard3" style="width: 25%;float: left;"></div>
-    <div id="myBoard4" style="width: 25%;float: left;"></div> -->
+ 
+  <div class="container">
+    <div id="myBoard" style="width: 43%; height: 30%;"></div>
+    <div id="notification" class="notification hidden"></div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" 
 integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="/assets/xiangqiboard.js"></script>
   <script src="/assets/xiangqi.min.js"></script>
+  <script src="/assets/game.js"></script>
  
    <script> 
   (()=>{
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const level = urlParams.get('level');
+    const leverInt=level*1
+    
     const game =new Xiangqi;
     const config = {
         pieceTheme: './docs/img/xiangqipieces/traditional/{piece}.svg',
-        boardTheme: './docs/img/xiangqiboards/wikimedia/xiangqiboard.svg',
+        boardTheme: './docs/img/banco.png',
         orientation: 'white',
         position: game.fen(),
-        
         showNotation: true
     }
-
-    let board=Xiangqiboard('#myBoard1', config)
+    //tao ra ban co mac dinh
+    let board=Xiangqiboard('#myBoard', config)
 
     config.pieceTheme = './docs/img/xiangqipieces/wikipedia/{piece}.svg'
     config.pieceTheme = './docs/img/xiangqipieces/traditional/{piece}.svg'
     config.position = 'r1bakab1r/9/1cn2cn2/p1p1p1p1p/9/9/P1P1P1P1P/1C2C1N2/9/RNBAKABR1'
+   
+   
+
+function reverseArray(array) {
+  return array.slice().reverse();
+}
+//tot
+var pEvalRed =
+[
+[10.0,  10.0,  10.0,  10.0,  10.0,  10.0,  10.0,  10.0, 10.0],
+[10.0,  10.0,  11.0,  15.0,  20.0,  15.0,  11.0,  10.0, 10.0],
+[8.0,  10.0,  11.0,  15.0,  15.0,  15.0,  11.0,  10.0, 8.0],
+[7.0,  9.0,  10.0,  11.0,  11.0,  11.0,  10.0,  9.0, 7.0],
+[6.0,  8.0,  9.0,  10.0,  10.0,  10.0,  9.0,  8.0, 6.0],
+[1.0,  2.0,  3.0,  4.0,  4.0,  4.0,  3.0,  2.0, 1.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0]
+];
+
+var pEvalBlack = reverseArray(pEvalRed);
+
+var rEvalRed =
+[
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[-2.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, -2.0],
+
+];
+
+var rEvalBlack = reverseArray(rEvalRed);
+
+var nEvalRed =
+[
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  -2.0,  0.0,  0.0,  0.0,  0.0,  0.0,  -2.0, 0.0],
+
+];
+
+var nEvalBlack = reverseArray(nEvalRed);
+
+var cEvalRed =
+[
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+
+];
+
+var cEvalBlack = reverseArray(cEvalRed);
+
+var bEvalRed =
+[
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  2.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+
+];
+
+var bEvalBlack = reverseArray(bEvalRed);
+
+var aEvalRed =
+[
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  2.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+
+];
+
+var aEvalBlack = reverseArray(aEvalRed);
+
+var kEvalRed =
+[
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  2.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  2.0,  0.0,  0.0,  0.0, 0.0],
+[0.0,  0.0,  0.0,  0.0,  2.0,  0.0,  0.0,  0.0, 0.0],
+
+];
+
+var kEvalBlack = reverseArray(kEvalRed);
+
+
+
+
+//Tinh tổng giá trị bàn cờ 
+function evaluateBoard(board) {
+  var totalEvaluation = 0;
+  for (var i = 0; i < 10; i++) {
+    for (var j = 0; j < 9; j++) {
+      totalEvaluation = totalEvaluation + getPieceValue(board[i][j], i ,j);
+    }
+  }
+  return totalEvaluation;
+}
+function showNotification(message) {
+    var notification = document.getElementById('notification');
+    notification.innerText = message;
+    notification.classList.remove('hidden');
+    setTimeout(function() {
+        notification.style.top = '20px'; // Hiển thị thông báo
+        setTimeout(function() {
+            notification.style.top = '-100px'; // Ẩn thông báo
+            setTimeout(function() {
+                notification.classList.add('hidden'); // Ẩn thông báo
+            }, 500);
+        }, 2000); // Thời gian hiển thị của thông báo: 2000ms (2 giây)
+    }, 100); // Đảm bảo thông báo được hiển thị sau khi ẩn lúc đầu
+}
+function updateStatus(){
+  if(game.game_over()){
+    showNotification("Trò chơi kết thúc")
+  }
+
+  
+  
+
+// Sử dụng hàm showNotification với message và duration tương ứng
+if (game.turn() === 'r') {
+    showNotification("Đến lượt bạn"); // Thời gian hiển thị: 3000ms (3 giây)
+}
+else {
+    
+}
+
+  // check bi chieu 
+  if (game.in_check()) {
+    showNotification("Bạn đang bị chiếu tướng");
+  }
+
+  // draw?
+  else if (game.in_draw()) {
+    showNotification("Game này Hòa")
+    
+  }
+}
+//tinh giá trị của từng con cờ 
+function getPieceValue(piece, x, y) {
+  if (piece === null) {
+    return 0;
+  }
+  var getAbsoluteValue = function (piece, isRed, x ,y) {
+    if (piece.type === 'p') { //chốt
+      return 15 + ( isRed ? pEvalRed[x][y] : pEvalBlack[x][y] );
+    } else if (piece.type === 'r') { //Xe
+      return 90 +( isRed ? rEvalRed[x][y] : rEvalBlack[x][y] );
+    } else if (piece.type === 'c') { //pháo
+      return 45 +( isRed ? cEvalRed[x][y] : cEvalBlack[x][y] );
+    } else if (piece.type === 'n') { // mã
+      return 40 +( isRed ? nEvalRed[x][y] : nEvalBlack[x][y] );
+    } else if (piece.type === 'b') { // tượng
+      return 20 +( isRed ? bEvalRed[x][y] : bEvalBlack[x][y] );
+    } else if (piece.type === 'a') { // sỹ
+      return 20 +( isRed ? aEvalRed[x][y] : aEvalBlack[x][y] );
+    } else if (piece.type === 'k') { // tướng
+      return 900 +( isRed ? kEvalRed[x][y] : kEvalBlack[x][y] );
+    }
+    throw "Unknown piece type: " + piece.type;
+  };
+
+  var absoluteValue = getAbsoluteValue(piece, piece.color === 'r', x ,y);
+  return piece.color === 'r' ? absoluteValue : -absoluteValue;
+}
+
+
+
+
+var positionCount
+
+
+
+
+
+
+
+function minimax(depth, game, alpha, beta, isMaximisingPlayer) {
+  positionCount++;
+  if (depth === 0) {
+    return -evaluateBoard(game.board());
+  }
+
+  var newGameMoves = game.moves();
+
+  if (isMaximisingPlayer) {
+    var bestMove = -9999;
+    for (var i = 0; i < newGameMoves.length; i++) {
+      game.move(newGameMoves[i]); // Thực hiện nước đi
+      var value = minimax(depth - 1, game, alpha, beta, !isMaximisingPlayer);
+      game.undo(); // Hoàn tác nước đi
+      bestMove = Math.max(bestMove, value);
+      alpha = Math.max(alpha, bestMove);
+      if (beta <= alpha) {
+        break; // Alpha-Beta Pruning
+      }
+    }
+    return bestMove;
+  } else {
+    var bestMove = 9999;
+    for (var i = 0; i < newGameMoves.length; i++) {
+      game.move(newGameMoves[i]); // Thực hiện nước đi
+      var value = minimax(depth - 1, game, alpha, beta, !isMaximisingPlayer);
+      game.undo(); // Hoàn tác nước đi
+      bestMove = Math.min(bestMove, value);
+      beta = Math.min(beta, bestMove);
+      if (beta <= alpha) {
+        break; // Alpha-Beta Pruning
+      }
+    }
+    return bestMove;
+  }
+}
+
+
+
+
+function minimaxRoot(depth, game, isMaximisingPlayer) {
+  var newGameMoves = game.moves();
+  var bestMove = -9999;
+  var bestMoveFound;
+
+  for(var i = 0; i < newGameMoves.length; i++) {
+    var newGameMove = newGameMoves[i]
+    game.move(newGameMove);
+    //Đánh giá đệ quy vị trí sau bước di chuyển hiện tại
+    var value = minimax(depth - 1, game, -10000, 10000, !isMaximisingPlayer);
+    game.undo();
+    if(value >= bestMove) {
+      bestMove = value;
+      bestMoveFound = newGameMove;
+    }
+  }
+  return bestMoveFound;
+}
+
+function getBestMove(game,level) {
+ 
+  updateStatus();
+  var depth = level;
+  var bestMove = minimaxRoot(depth, game, true);
+  return bestMove;
+}
+
+function makeBestMove() {
+  var bestMove = getBestMove(game,leverInt);
+  game.move(bestMove);
+  board.position(game.fen());
+  updateStatus();
+}
+
+
+
+
+
+
   
    
    let _selecting;
@@ -46,29 +348,75 @@ integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2i
       }
       return false;
    }
-    
+  
+   
+
+
+
+
+
+
+
+ 
+   
+
+
+ 
+//xu kien khi click vao 1 o
     $('.square-2b8ce').click(function(){
-      let square =$(this).data('square')
-      let moves =game.moves({square})
-      let move =`${_selecting}${square}`
-      if (_selecting && hasMove(_moves,move)) {
-        _selecting = null
-        _moves = null
-        game.move(move);
-        board.position(game.fen())
-      }
-      if(moves.length){
-        _selecting=square
-        _moves=moves
-
-      }
-      console.dir(move)
-    })
-
+     
+        if(game.turn() === 'r'){
+          //lay ra duong di co the di cua nhung con co 
+        
+          let square =$(this).data('square')
+          let moves =game.moves({square})
+          console.log(moves)
+          let move =`${_selecting}${square}`
+          removeGreySquares();  
+    // Highlight the clicked square
+          if (_selecting && hasMove(_moves,move)) {
+            
+            _selecting = null
+            _moves = null
+            game.move(move);
+            board.position(game.fen())
+            setTimeout(makeBestMove,1000)
+          
+            
+            
+            
+          }
+          if(moves.length){
+             let detailMoves = game.moves({
+               square: square,
+               verbose: true
+              });
     
+      // highlight the square they moused over
+            greySquare(square);
+      // highlight the possible squares for this piece
+          for (let i = 0; i < detailMoves.length; i++) {
+          
+            greySquare(detailMoves[i].to);
+      }
+            _selecting=square
+            _moves=moves
+          
+          }
+        }
+       
+         
+        
   
+ 
+ // game over
+        
+        
+      
+      
+    })
   })();
-  
+
     
 </script> 
 </body>

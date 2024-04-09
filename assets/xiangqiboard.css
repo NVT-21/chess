@@ -9,6 +9,11 @@
  * Date: $date$
  */
 
+.highlight {
+   background: radial-gradient(circle, transparent 50%, #dddd26 50%);
+   background-size: 100% 100%;
+}
+
 .clearfix-5f3b5 {
   clear: both;
 }
